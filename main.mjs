@@ -1,0 +1,1 @@
+const splitBitChunks = bitString.match(/.{1,6}/g)
