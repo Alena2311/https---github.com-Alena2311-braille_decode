@@ -25,7 +25,7 @@ function decodeBrailleToText(bits) {
     }
 
     if (character === " ") {
-      numberFollows = false;
+      emptySpace = false;
       result += " ";
       continue;
     }
@@ -42,12 +42,7 @@ function decodeBrailleToText(bits) {
 }
 const base64String = decodeBrailleToText(bitString);
 
-
-const base64Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-const base64Binary = base64String
-  .split("")
-  .map(character => base64Characters.indexOf(character).toString(2).padStart(6, "0"))
-  .join("");
+const plainText = Buffer.from(base64String, "base64").toString("utf-8");
 
 console.log(base64String);
-console.log(base64Binary);
+console.log(plainText);
