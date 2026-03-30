@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { brailleAlphabet, brailleNumbers } from "./brailleAlphabet.mjs";
 
 const input = readFileSync("./input.txt", "utf-8");
@@ -82,3 +82,18 @@ const mostCommon = Object.entries(characterFrequency)
   .sort((a, b) => b[1] - a[1])[0][0];
 
 console.log("Most common letter:", mostCommon);
+
+function decryptRot(text, shift) {
+  return text.split("").map(character => {
+    if (character >= "a" && character <= "z") {
+      return String.fromCharCode(((character.charCodeAt(0) - 97 - shift + 26) % 26) + 97);
+    }
+    if (character >= "A" && character <= "Z") {
+      return String.fromCharCode(((character.charCodeAt(0) - 65 - shift + 26) % 26) + 65);
+    }
+    return character;
+  }).join("");
+}
+
+const decrypted = decryptRot(plainText, 16);
+writeFileSync("./output.md", decrypted);
